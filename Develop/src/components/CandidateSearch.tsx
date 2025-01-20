@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Candidate } from "../interfaces/Candidate.interface";
-import { searchGithub } from "../api/API"; // Adjust the import path as necessary
+import { searchGithub } from "../api/API"; 
 
 const CandidateSearch = () => {
     const [candidate, setCandidate] = useState<Candidate | null>(null);

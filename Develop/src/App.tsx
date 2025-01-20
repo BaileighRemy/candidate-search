@@ -12,7 +12,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<CandidateSearch />} />
-          <Route path="/saved-candidates" element={<SavedCandidates />} />
+          <Route path="/saved-candidates" element={<SavedCandidates candidates={[]} />} />
         </Routes>
         <Outlet />
       </main>
