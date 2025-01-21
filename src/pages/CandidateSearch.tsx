@@ -10,6 +10,15 @@ const CandidateSearch: React.FC<CandidateSearchProps> = ({ setCandidatesList }) 
     const [candidate, setCandidate] = useState<Candidate | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    // Load candidates from local storage when the component mounts
+    useEffect(() => {
+        const savedCandidates = localStorage.getItem("candidates");
+        if (savedCandidates) {
+            setCandidatesList(JSON.parse(savedCandidates)); // Parse and set saved candidates
+        }
+        fetchCandidate(); // Fetch the first candidate
+    }, []);
+
     // Function to fetch a candidate from the GitHub API
     const fetchCandidate = async () => {
         try {
@@ -29,7 +38,11 @@ const CandidateSearch: React.FC<CandidateSearchProps> = ({ setCandidatesList }) 
     // Function to save the current candidate
     const saveCandidate = () => {
         if (candidate) {
-            setCandidatesList((prevList) => [...prevList, candidate]); // Use functional update
+            setCandidatesList((prevList) => {
+                const updatedList = [...prevList, candidate]; // Update the list
+                localStorage.setItem("candidates", JSON.stringify(updatedList)); // Save to local storage
+                return updatedList;
+            });
             fetchCandidate(); // Fetch the next candidate after saving
         }
     };
@@ -38,11 +51,6 @@ const CandidateSearch: React.FC<CandidateSearchProps> = ({ setCandidatesList }) 
     const rejectCandidate = () => {
         fetchCandidate(); // Fetch the next candidate without saving
     };
-
-    // useEffect to fetch the first candidate when the component mounts
-    useEffect(() => {
-        fetchCandidate();
-    }, []);
 
     return (
         <div>
