@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Candidate } from "../interfaces/Candidate.interface";
 import { searchGithub } from "../api/API"; 
 
-const CandidateSearch = () => {
+interface CandidateSearchProps {
+    setCandidatesList: Dispatch<SetStateAction<Candidate[]>>; // Accept setCandidatesList as a prop
+}
+
+const CandidateSearch: React.FC<CandidateSearchProps> = ({ setCandidatesList }) => {
     const [candidate, setCandidate] = useState<Candidate | null>(null);
-    const [candidatesList, setCandidatesList] = useState<Candidate[]>([]); // To store saved candidates
     const [error, setError] = useState<string | null>(null);
 
     // Function to fetch a candidate from the GitHub API
@@ -26,7 +29,7 @@ const CandidateSearch = () => {
     // Function to save the current candidate
     const saveCandidate = () => {
         if (candidate) {
-            setCandidatesList([...candidatesList, candidate]);
+            setCandidatesList((prevList) => [...prevList, candidate]); // Use functional update
             fetchCandidate(); // Fetch the next candidate after saving
         }
     };
@@ -47,9 +50,9 @@ const CandidateSearch = () => {
             {error && <p>{error}</p>}
             {candidate ? (
                 <div>
-                    <h2>{candidate.login}</h2> {/* Use 'login' for the username */}
+                    <h2>{candidate.username}</h2> 
                     <p>Location: {candidate.location || "Not available"}</p>
-                    <img src={candidate.avatar_url} alt={candidate.login} /> {/* Use 'avatar_url' for the avatar image */}
+                    <img src={candidate.avatar} alt={candidate.username} /> 
                     <p>
                         <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">
                             View Profile

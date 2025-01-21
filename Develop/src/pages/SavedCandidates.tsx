@@ -15,9 +15,9 @@ const SavedCandidates: React.FC<SavedCandidatesProps> = ({ candidates }) => {
                 <ul>
                     {candidates.map((candidate, index) => (
                         <li key={index}>
-                            <h3>{candidate.login}</h3>
+                            <h3>{candidate.username}</h3>
                             <p>Location: {candidate.location || "Not available"}</p>
-                            <img src={candidate.avatar_url} alt={candidate.login} />
+                            <img src={candidate.avatar} alt={candidate.username} />
                             <p>
                                 <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">
                                     View Profile
