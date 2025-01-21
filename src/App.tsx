@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom'; 
+import { Outlet } from 'react-router-dom'; 
 import Nav from './components/Nav';
-import CandidateSearch from './pages/CandidateSearch'; 
-import SavedCandidates from './pages/SavedCandidates'; 
 import { Candidate } from './interfaces/Candidate.interface';
 
 function App() {
@@ -12,17 +10,7 @@ function App() {
     <div>
       <Nav />
       <main>
-    
-        <Routes>
-          <Route 
-            path="/" 
-            element={<CandidateSearch setCandidatesList={setCandidatesList} />} 
-          />
-          <Route 
-            path="/saved-candidates" 
-            element={<SavedCandidates candidates={candidatesList} />} 
-          />
-        </Routes>
+        <Outlet context={{ candidatesList, setCandidatesList }} /> {/* Render nested routes */}
       </main>
     </div>
   );

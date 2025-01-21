@@ -15,11 +15,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <CandidateSearch />,
+        element: <CandidateSearch setCandidatesList={() => {}} />,
       },
       {
-        path: '/SavedCandidates',
-        element: <SavedCandidates />,
+        path: 'saved-candidates', 
+        element: <SavedCandidates candidates={[]} />,
       },
     ],
   },
