@@ -1,23 +1,29 @@
-import React from 'react';
-import { Outlet, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom'; // Import Routes and Route
 import Nav from './components/Nav';
-import CandidateSearch from './components/CandidateSearch';
-import SavedCandidates from './components/SavedCandidates';
+import CandidateSearch from './pages/CandidateSearch'; // Adjust the import path as necessary
+import SavedCandidates from './pages/SavedCandidates'; // Adjust the import path as necessary
 
 function App() {
+  const [candidatesList, setCandidatesList] = useState([]);
+
   return (
-    <Router>
-      <div>
+    <div>
       <Nav />
       <main>
+        {/* Render child routes with props */}
         <Routes>
-          <Route path="/" element={<CandidateSearch />} />
-          <Route path="/saved-candidates" element={<SavedCandidates candidates={[]} />} />
+          <Route 
+            path="/" 
+            element={<CandidateSearch setCandidatesList={setCandidatesList} />} 
+          />
+          <Route 
+            path="/saved-candidates" 
+            element={<SavedCandidates candidates={candidatesList} />} 
+          />
         </Routes>
-        <Outlet />
       </main>
-      </div>
-    </Router>
+    </div>
   );
 }
 
